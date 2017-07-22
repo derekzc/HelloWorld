@@ -21,7 +21,7 @@ public class TimeTools
 
     public static void main(String[] args)
     {
-        String GMTTime = "1431867911476";
+        String GMTTime = "1222431906166";
         String timeFormat = "yyyyMMdd-HHmmss";
         System.out.println(TimeTools.GMTToFormatTime(GMTTime, timeFormat));
     }

@@ -4,6 +4,7 @@ import com.derekzc.util.file.FileTools;
 import com.derekzc.util.string.StringTools;
 import com.derekzc.util.time.TimeTools;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,28 +13,33 @@ public class FileReName
 {
     private static String FILE_NAME_FORMAT = "yyyyMMdd_HHmmss";
 
-    private static String PREFIX_1 = "wx_camera_";
-
     public static void main(String[] args)
     {
         String path = "I:\\Video";
+        /**
+         * I:\Video\1500639633954.mp4
+         */
         String[] fileFullNames = FileTools.geFileName(path);
+
         String newFileFullName;
         String tempName;
+        String fileNamePrefix;
 
         for(String oldFileFullName: fileFullNames)
         {
-            tempName = StringTools.deleteStringPrefix(oldFileFullName, PREFIX_1 );
+            fileNamePrefix = StringTools.getFileNameSuffix(oldFileFullName);
 
-            String fileNamePrefix = StringTools.getFileNameSuffix(tempName);
-
-            tempName = StringTools.deleteStringSuffix(tempName, fileNamePrefix);
+            tempName = StringTools.deleteStringSuffix(oldFileFullName, fileNamePrefix);
 
             tempName = TimeTools.GMTToFormatTime(tempName, FILE_NAME_FORMAT);
 
             newFileFullName = tempName + fileNamePrefix;
 
             System.out.println("oldFullName = "+ oldFileFullName+ "      newName = "+ newFileFullName);
+
+            File oldFile = new File(path + File.separator + oldFileFullName);
+            File newFile = new File(path + File.separator + newFileFullName);
+            oldFile.renameTo(newFile);
         }
     }
 }
